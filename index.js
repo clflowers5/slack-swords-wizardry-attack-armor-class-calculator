@@ -1,7 +1,11 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import { CLERIC_DRUID_MONK_ATTACK_TABLE, FIGHTER_PALADIN_RANGER_ATTACK_TABLE } from './attackTables'
+import {
+  CLERIC_DRUID_MONK_ATTACK_TABLE,
+  FIGHTER_PALADIN_RANGER_ATTACK_TABLE,
+  MAGICUSER_THIEF_ASSASSIN_ATTACK_TABLE
+} from './attackTables'
 // typings are incorrect for package
 const random = require('random')
 
@@ -41,16 +45,22 @@ function parseInput (input) {
 
 function calculateHitArmorClass ({ level, attackRoll }) {
   return {
-    clericDruidMonkArmorClass: CLERIC_DRUID_MONK_ATTACK_TABLE[level][attackRoll] || 'Complete Miss',
-    fighterPaladinRangerArmorClass: FIGHTER_PALADIN_RANGER_ATTACK_TABLE[level][attackRoll] || 'Complete Miss',
+    clericDruidMonkArmorClass: String(CLERIC_DRUID_MONK_ATTACK_TABLE[level][attackRoll]) || 'Complete Miss',
+    fighterPaladinRangerArmorClass: String(FIGHTER_PALADIN_RANGER_ATTACK_TABLE[level][attackRoll]) || 'Complete Miss',
+    magicUserThiefAssassinArmorClass: String(MAGICUSER_THIEF_ASSASSIN_ATTACK_TABLE[level][attackRoll]) || 'Complete Miss',
   }
 }
 
-function buildResultText ({ clericDruidMonkArmorClass, fighterPaladinRangerArmorClass }) {
+function buildResultText ({
+  clericDruidMonkArmorClass,
+  fighterPaladinRangerArmorClass,
+  magicUserThiefAssassinArmorClass
+}) {
   return `
 Cleric, Druid, Monk - You hit armor class: ${ clericDruidMonkArmorClass }
 Fighter, Paladin, Ranger - You hit armor class: ${ fighterPaladinRangerArmorClass }
-`
+Magic-User, Thief, Assassin - You hit armor class: ${ magicUserThiefAssassinArmorClass }
+    `
 }
 
 app.post('/v1/attack', (req, res) => {
@@ -67,7 +77,8 @@ app.post('/v1/attack', (req, res) => {
   const finalAttackRoll = Number(attackRoll) + Number(bonus)
   const {
     clericDruidMonkArmorClass,
-    fighterPaladinRangerArmorClass
+    fighterPaladinRangerArmorClass,
+    magicUserThiefAssassinArmorClass
   } = calculateHitArmorClass({
     level,
     attackRoll: finalAttackRoll
@@ -75,16 +86,28 @@ app.post('/v1/attack', (req, res) => {
 
   res.json({
     response_type: 'in_channel',
-    text: buildResultText({ clericDruidMonkArmorClass, fighterPaladinRangerArmorClass }),
+    text: buildResultText({
+      clericDruidMonkArmorClass,
+      fighterPaladinRangerArmorClass,
+      magicUserThiefAssassinArmorClass
+    }),
     attachments: [
       {
-        text: `1d20: ${ attackRoll }`,
+        text: `1d20: ${ attackRoll }`
+
+        ,
       },
       {
-        text: `Final attack roll: ${ Number(attackRoll) + Number(bonus) }`,
+        text:
+
+          `Final attack roll: ${ Number(attackRoll) + Number(bonus) }`
+
+        ,
       }
     ]
   })
 })
 
-app.listen(port, () => console.log(`App listening on port ${ port }!`))
+app.listen(port, () => console.log(
+  `App listening on port ${ port }!`
+))
