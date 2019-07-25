@@ -16,8 +16,6 @@ function validateEnvironment () {
 
 function validateToken ({ token }) {
   return (req, res, next) => {
-    console.log(req.body)
-
     if (req.body.token === token) {
       next()
     } else {
