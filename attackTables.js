@@ -1,3 +1,5 @@
+// Organized by TABLE[character-level][dice-roll]
+
 const CLERIC_DRUID_MONK_ATTACK_TABLE = {
   1: {
     10: 9,

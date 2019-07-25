@@ -43,8 +43,8 @@ function parseInput (input) {
 
 function calculateHitArmorClass ({ level, attackRoll }) {
   return {
-    clericDruidMonkArmorClass: 5,
-    fighterPaladinRangerArmorClass: 6
+    clericDruidMonkArmorClass: CLERIC_DRUID_MONK_ATTACK_TABLE[level][attackRoll] || 'Complete Miss',
+    fighterPaladinRangerArmorClass: FIGHTER_PALADIN_RANGER_ATTACK_TABLE[level][attackRoll] || 'Complete Miss',
   }
 }
 
