@@ -52,10 +52,10 @@ function calculateHitArmorClass ({ level, attackRoll }) {
 }
 
 function buildResultText ({
-  clericDruidMonkArmorClass,
-  fighterPaladinRangerArmorClass,
-  magicUserThiefAssassinArmorClass
-}) {
+                            clericDruidMonkArmorClass,
+                            fighterPaladinRangerArmorClass,
+                            magicUserThiefAssassinArmorClass
+                          }) {
   return `
 Cleric, Druid, Monk - You hit armor class: ${ clericDruidMonkArmorClass }
 Fighter, Paladin, Ranger - You hit armor class: ${ fighterPaladinRangerArmorClass }
@@ -93,9 +93,10 @@ app.post('/v1/attack', (req, res) => {
     }),
     attachments: [
       {
-        text: `1d20: ${ attackRoll }`
-
-        ,
+        text: `Level: ${ level } Attack Bonus: ${ bonus }`
+      },
+      {
+        text: `1d20: ${ attackRoll }`,
       },
       {
         text:
