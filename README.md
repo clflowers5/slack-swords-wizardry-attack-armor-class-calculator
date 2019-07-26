@@ -21,6 +21,10 @@ Magic-User, Thief, Assassin - You hit armor class: 7
 - Final attack roll: 12
 ```
 
+### Development
+Easiest way to develop is to use `ngrok` as a tunnel, start the app with `yarn dev`, and point the slash command url
+to your `ngrok` domain. Changes will reflect in real time.
+
 ### Deployment
 Uses `claudia.js` as a global install (`npm install -g claudia`) to deploy to aws / lambda / api-gateway.
 The less I have to think about the better :thumbsup:
