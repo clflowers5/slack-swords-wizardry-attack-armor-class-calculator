@@ -5,14 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node --require esm index.js",
-    "dev": "nodemon -- --require esm index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "NODE_ENV=dev nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy:create": "AWS_PROFILE=claudia claudia create --handler index.handler --deploy-proxy-api --region us-east-2 --name slack-swords-wizardry-attack-ac-calc --set-env SLACK_VERIFICATION_TOKEN=$SLACK_VERIFICATION_TOKEN",
+    "deploy:update": "AWS_PROFILE=claudia claudia update --handler index.handler --deploy-proxy-api --region us-east-2 --name slack-swords-wizardry-attack-ac-calc --set-env SLACK_VERIFICATION_TOKEN=$SLACK_VERIFICATION_TOKEN",
+    "deploy:destroy": "AWS_PROFILE=claudia claudia destroy --handler index.handler --deploy-proxy-api --region us-east-2 --name slack-swords-wizardry-attack-ac-calc"
   },
-  "author": "",
+  "author": "Haarvey Chris Flowers",
   "license": "ISC",
   "dependencies": {
+    "aws-serverless-express": "^3.3.6",
     "body-parser": "^1.19.0",
-    "esm": "^3.2.25",
     "express": "^4.17.1",
     "random": "^2.1.1"
   }

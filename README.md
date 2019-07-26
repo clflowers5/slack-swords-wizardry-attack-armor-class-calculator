@@ -20,3 +20,9 @@ Magic-User, Thief, Assassin - You hit armor class: 7
 - 1d20: 9
 - Final attack roll: 12
 ```
+
+### Deployment
+Uses `claudia.js` as a global install (`npm install -g claudia`) to deploy to aws / lambda / api-gateway.
+The less I have to think about the better :thumbsup:
+
+The `deploy:create` and `deploy:update` scripts expect an environment variable set for `SLACK_VERIFICATION_TOKEN` 

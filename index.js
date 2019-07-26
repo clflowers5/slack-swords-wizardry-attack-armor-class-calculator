@@ -1,13 +1,13 @@
-import express from 'express'
-import bodyParser from 'body-parser'
+const express = require('express')
+const serverlessExpress = require('aws-serverless-express')
+const bodyParser = require('body-parser')
+const random = require('random')
 
-import {
+const {
   CLERIC_DRUID_MONK_ATTACK_TABLE,
   FIGHTER_PALADIN_RANGER_ATTACK_TABLE,
   MAGICUSER_THIEF_ASSASSIN_ATTACK_TABLE
-} from './attackTables'
-// typings are incorrect for package
-const random = require('random')
+} = require('./attackTables')
 
 const app = express()
 const port = 5000
@@ -105,6 +105,12 @@ app.post('/v1/attack', (req, res) => {
   })
 })
 
-app.listen(port, () => console.log(
-  `App listening on port ${ port }!`
-))
+const server = serverlessExpress.createServer(app)
+exports.handler = (event, context) => serverlessExpress.proxy(server, event, context)
+
+const isDev = process.env.NODE_ENV === 'dev'
+if (isDev) {
+  app.listen(port, () => console.log(
+    `App listening on port ${ port }!`
+  ))
+}

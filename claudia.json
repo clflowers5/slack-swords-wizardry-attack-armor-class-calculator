@@ -1,0 +1,10 @@
+{
+  "lambda": {
+    "role": "slack-swords-wizardry-attack-ac-calc-executor",
+    "name": "slack-swords-wizardry-attack-ac-calc",
+    "region": "us-east-2"
+  },
+  "api": {
+    "id": "nitrnz7rxh"
+  }
+}
