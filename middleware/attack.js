@@ -4,7 +4,7 @@ const {
   CLERIC_DRUID_MONK_ATTACK_TABLE,
   FIGHTER_PALADIN_RANGER_ATTACK_TABLE,
   MAGICUSER_THIEF_ASSASSIN_ATTACK_TABLE
-} = require('./../static/attackTables')
+} = require('../static/attack-tables')
 
 function parseInput (input) {
   // input format: [character-level] [bonus-to-hit]
@@ -24,10 +24,10 @@ function calculateHitArmorClass ({ level, attackRoll }) {
 }
 
 function buildResultText ({
-                            clericDruidMonkArmorClass,
-                            fighterPaladinRangerArmorClass,
-                            magicUserThiefAssassinArmorClass
-                          }) {
+  clericDruidMonkArmorClass,
+  fighterPaladinRangerArmorClass,
+  magicUserThiefAssassinArmorClass
+}) {
   return `
 Cleric, Druid, Monk - You hit armor class: ${clericDruidMonkArmorClass}
 Fighter, Paladin, Ranger - You hit armor class: ${fighterPaladinRangerArmorClass}
@@ -42,7 +42,7 @@ function attack (req, res) {
   try {
     ({ level, bonus } = parseInput(req.body.text))
   } catch ({ message }) {
-    res.json({ text: message })
+    return res.status(400).json({ text: message })
   }
 
   const attackRoll = random.int(1, 20)
