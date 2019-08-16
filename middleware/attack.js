@@ -17,9 +17,9 @@ function parseInput (input) {
 
 function calculateHitArmorClass ({ level, attackRoll }) {
   return {
-    clericDruidMonkArmorClass: String(CLERIC_DRUID_MONK_ATTACK_TABLE[level][attackRoll]) || 'Complete Miss',
-    fighterPaladinRangerArmorClass: String(FIGHTER_PALADIN_RANGER_ATTACK_TABLE[level][attackRoll]) || 'Complete Miss',
-    magicUserThiefAssassinArmorClass: String(MAGICUSER_THIEF_ASSASSIN_ATTACK_TABLE[level][attackRoll]) || 'Complete Miss'
+    clericDruidMonkArmorClass: CLERIC_DRUID_MONK_ATTACK_TABLE[level][attackRoll],
+    fighterPaladinRangerArmorClass: FIGHTER_PALADIN_RANGER_ATTACK_TABLE[level][attackRoll],
+    magicUserThiefAssassinArmorClass: MAGICUSER_THIEF_ASSASSIN_ATTACK_TABLE[level][attackRoll],
   }
 }
 
@@ -28,10 +28,15 @@ function buildResultText ({
   fighterPaladinRangerArmorClass,
   magicUserThiefAssassinArmorClass
 }) {
+  const buildHitString = (armorClass) => {
+    return armorClass
+      ? `You hit armor class: ${ armorClass }`
+      : `Complete miss...`
+  }
   return `
-Cleric, Druid, Monk - You hit armor class: ${clericDruidMonkArmorClass}
-Fighter, Paladin, Ranger - You hit armor class: ${fighterPaladinRangerArmorClass}
-Magic-User, Thief, Assassin - You hit armor class: ${magicUserThiefAssassinArmorClass}
+Cleric, Druid, Monk - ${ buildHitString(clericDruidMonkArmorClass) }
+Fighter, Paladin, Ranger - ${ buildHitString(fighterPaladinRangerArmorClass) }
+Magic-User, Thief, Assassin - ${ buildHitString(magicUserThiefAssassinArmorClass) }
 `
 }
 
@@ -65,16 +70,16 @@ function attack (req, res) {
     }),
     attachments: [
       {
-        text: `Level: ${level} Attack Bonus: ${bonus}`
+        text: `Level: ${ level } Attack Bonus: ${ bonus }`
       },
       {
-        text: `1d20: ${attackRoll}`
+        text: `1d20: ${ attackRoll }`
       },
       {
-        text: `Final attack roll: ${Number(attackRoll) + Number(bonus)}`
+        text: `Final attack roll: ${ Number(attackRoll) + Number(bonus) }`
       }
     ]
   })
 }
 
-module.exports = attack;
+module.exports = attack
